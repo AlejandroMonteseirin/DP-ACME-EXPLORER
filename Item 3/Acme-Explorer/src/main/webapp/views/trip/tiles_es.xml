@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="trip/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de viajes" />
+		<put-attribute name="body" value="/views/trip/list.jsp" />
+	</definition>
+	
+	<definition name="trip/listAJAX" extends="master.page">	
+		<put-attribute name="title" value="Lista de viajes" />
+		<put-attribute name="body" value="/views/trip/listAJAX.jsp" />
+	</definition>
+	
+	<definition name="trip/edit" extends="master.page">	
+		<put-attribute name="title" value="Edición de viaje" />
+		<put-attribute name="body" value="/views/trip/edit.jsp" />
+	</definition>
+	
+	<definition name="trip/manager/display" extends="master.page">	
+		<put-attribute name="title" value="Detalles del viaje" />
+		<put-attribute name="body" value="/views/trip/display.jsp" />
+	</definition>
+	
+	<definition name="trip/display" extends="master.page">	
+		<put-attribute name="title" value="Detalles del viaje" />
+		<put-attribute name="body" value="/views/trip/display.jsp" />
+	</definition>
+	
+	<definition name="trip/searchByKeyword" extends="master.page">	
+		<put-attribute name="title" value="Búsqueda de viajes por palabra clave" />
+		<put-attribute name="body" value="/views/trip/searchByKeyword.jsp" />
+	</definition>
+	
+</tiles-definitions>

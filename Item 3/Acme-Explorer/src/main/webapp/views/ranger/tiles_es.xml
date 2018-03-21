@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+
+ * Copyright (C) 2017 Universidad de Sevilla
+ * Author (A) 2012 Rafael Corchuelo (corchu@us.es)
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="ranger/edit" extends="master.page">
+		<put-attribute name="title" value="Editar guía" />
+		<put-attribute name="body" value="/views/ranger/edit.jsp" />
+	</definition>
+	
+	<definition name="ranger/list" extends="master.page">
+		<put-attribute name="title" value="Lista de guía" />
+		<put-attribute name="body" value="/views/ranger/list.jsp" />
+	</definition>
+	
+	<definition name="ranger/display" extends="master.page">
+		<put-attribute name="title" value="Mostrando guía" />
+		<put-attribute name="body" value="/views/ranger/display.jsp" />
+	</definition>
+	
+		<definition name="ranger/registration" extends="master.page">
+		<put-attribute name="title" value="Registrarse como guía" />
+		<put-attribute name="body" value="/views/ranger/registration.jsp" />
+	</definition>
+	
+</tiles-definitions>

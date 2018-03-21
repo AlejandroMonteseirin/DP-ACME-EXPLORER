@@ -1,0 +1,228 @@
+Query C/1
+:
+The average, the minimum, the maximum, and the standard deviation of the number of applications per trip.
+
+Query: select avg(t.applications.size), max(t.applications.size), sqrt(sum(t.applications.size*t.applications.size)/count(t.applications.size)-(avg(t.applications.size)*avg(t.applications.size))) from Trip t;
+
+Description: By using this query we can obtain the average, the minimum, thhe maximum and the standard deviation  of the number of applications per trip.
+Results:
+
+1 object selected
+[1.6667, 2, 0.4714045231480543]
+
+
+
+
+Query C/2:
+The average, the minimum, the maximum, and the standar deviation of the number of trips managed per manager.
+
+select avg(m.trips.size),min(m.trips.size),max(m.trips.size),sqrt(sum(m.trips.size*m.trips.size)/count(m.trips.size)-(avg(m.trips.size)*avg(m.trips.size))) from Manager m;
+
+Description: By using this query we can obtain the average, the minimum, thhe maximum and the standard deviation  of the number of trips managed per manager.
+Results:
+1 object selected
+[1.5, 1, 2, 0.5]
+
+
+Query C/3:
+The average, the minimum, the maximum, and the standard deviation of the price of the trips.
+select avg(t.price), min(t.price), max(t.price), sqrt(sum(t.price * t.price) / count(t.price) - (avg(t.price) * avg(t.price))) from Trip t;
+
+
+Description: By using this query we can obtain the average, the minimum, thhe maximum and the standard deviation  of the number of trips managed per manager.
+Results:
+1 object selected
+[4696.833333333333, 2300.0, 6790.5, 1845.7302228536964]
+
+Query C/4:
+
+The average, the minimum, the maximum, and the standard deviation of the number trips guided per ranger.
+select avg(r.trips.size),max(r.trips.size),min(r.trips.size),sqrt(sum(r.trips.size * r.trips.size) / count(r.trips.size) - (avg(r.trips.size) * avg(r.trips.size))) from Ranger r;
+Description: By using this query we can obtain the average, the minimum, thhe maximum and the standard deviation  of the number of trips guided per manager.
+Results:
+
+
+1 object selected
+[1.5, 2, 1, 0.5]
+
+Query C/5:
+
+The ratio of applications with status “PENDING”.
+Query: select sum(case when a.status = 'PENDING' then 1.0 else 0.0 end)/count(a) as pendingStatus_ratio from Application a;
+
+
+
+Description: By using this query we can obtain the ratio of applications with status “PENDING”.
+Results:
+1 object selected
+0.6
+
+
+Query C/6:
+The ratio of applications with status “DUE”.
+Query: select sum(case when a.status = 'DUE' then 1.0 else 0.0 end)/count(a) as DueStatus_ratio from Application a;
+Description: With this query we can obtain the ratio of applications with status "DUE". Ratio means the number of applications with "DUE" over the total number of applications.
+Results:
+1 object selected
+0.2
+
+
+Query C/7:
+The ratio of applications with status “ACCEPTED”
+Query: select sum(case when a.status='ACCEPTED' then 1.0 else 0.0 end)/count(a) from Application a;
+Description: We get the ratio of applications with status "ACCEPTED". Ratio means the number of applications with status "ACCEPTED" over the total number of applications.
+Results:
+1 object selected
+0.0
+
+Query C/8:
+
+select sum(case when a.status = 'CANCELLED' then 1.0 else 0.0 end)/count(a) as cancelledStatus_ratio from Application a;
+
+Description: With this query we can obtain the ratio of applications with status "CANCELLED". Ratio means the number of applications with "CANCELLED" over the total number of applications.
+Results:
+1 object selected
+0.2
+
+Query C/9
+:
+The ratio of trips that have been cancelled versus the total number of trips that have been organised.
+Query: select sum(case when t.isCancelled = true then 1.0 else 0.0 end)/count(t) as cancelledTrip_ratio from Trip t;
+Description: By means of this query we can obtain the result of the cancelled trips over all the the trips. 
+
+Results: 
+1 object selected
+0.3333333
+
+Query C/10:
+
+
+The listing of trips that have got at least 10% more applications than the average, ordered by number of applications.
+Query: select t from Trip t where t.applications.size >= 1.1*(select avg(t.applications.size) from Trip t) order by t.applications.size;
+Description: This query is used to know  the list of trips with all their properties which have a 10% more applications than the average of all the trips.
+Results: 
+2 objects selected
+domain.Trip{id=1973, version=0}
+	domain.DomainEntity::id: int = 1973
+	domain.DomainEntity::version: int = 0
+	domain.Trip::ticker: java.lang.String = "171026-AAAA"
+	domain.Trip::title: java.lang.String = "trip1"
+	domain.Trip::description: java.lang.String = "description1"
+	domain.Trip::price: java.lang.Double = 5000.0
+	domain.Trip::requeriments: java.util.Collection = ["requirement1", "requirement2", "requirement3"]
+	domain.Trip::publicationDate: java.util.Date = <<2018-06-07>>
+	domain.Trip::startDate: java.util.Date = <<2016-05-08>>
+	domain.Trip::endDate: java.util.Date = <<2016-12-09>>
+	domain.Trip::cancelReason: java.lang.String = ""
+	domain.Trip::stages: java.util.Collection = [domain.Stage{id=1952, version=0}, domain.Stage{id=1953, version=0}, domain.Stage{id=1954, version=0}]
+	domain.Trip::tags: java.util.Collection = [domain.Tag{id=1968, version=0}, domain.Tag{id=1969, version=0}, domain.Tag{id=1970, version=0}]
+	domain.Trip::sponsorships: java.util.Collection = [domain.Sponsorship{id=1948, version=1}]
+	domain.Trip::audits: java.util.Collection = [domain.Audit{id=1976, version=0}]
+	domain.Trip::notes: java.util.Collection = [domain.Note{id=1990, version=0}]
+	domain.Trip::stories: java.util.Collection = [domain.Story{id=1962, version=1}]
+	domain.Trip::applications: java.util.Collection = [domain.Application{id=1993, version=0}, domain.Application{id=1997, version=0}]
+	domain.Trip::ranger: domain.Ranger = domain.Ranger{id=1937, version=1}
+	domain.Trip::category: domain.Category = domain.Category{id=1853, version=1}
+	domain.Trip::legalText: domain.LegalText = domain.LegalText{id=1925, version=0}
+domain.Trip{id=1975, version=0}
+	domain.DomainEntity::id: int = 1975
+	domain.DomainEntity::version: int = 0
+	domain.Trip::ticker: java.lang.String = "171030-AAAA"
+	domain.Trip::title: java.lang.String = "trip3"
+	domain.Trip::description: java.lang.String = "description3"
+	domain.Trip::price: java.lang.Double = 6790.5
+	domain.Trip::requeriments: java.util.Collection = ["requirement1", "requirement2", "requirement3", "requirement4"]
+	domain.Trip::publicationDate: java.util.Date = <<2015-01-08>>
+	domain.Trip::startDate: java.util.Date = <<2016-05-08>>
+	domain.Trip::endDate: java.util.Date = <<2016-12-09>>
+	domain.Trip::cancelReason: java.lang.String = ""
+	domain.Trip::stages: java.util.Collection = [domain.Stage{id=1957, version=0}, domain.Stage{id=1958, version=0}, domain.Stage{id=1959, version=0}, domain.Stage{id=1960, version=0}, domain.Stage{id=1961, version=0}]
+	domain.Trip::tags: java.util.Collection = [domain.Tag{id=1969, version=0}, domain.Tag{id=1970, version=0}, domain.Tag{id=1971, version=0}, domain.Tag{id=1972, version=0}]
+	domain.Trip::sponsorships: java.util.Collection = [domain.Sponsorship{id=1950, version=1}, domain.Sponsorship{id=1951, version=1}]
+	domain.Trip::audits: java.util.Collection = [domain.Audit{id=1979, version=0}, domain.Audit{id=1980, version=0}]
+	domain.Trip::notes: java.util.Collection = [domain.Note{id=1992, version=0}]
+	domain.Trip::stories: java.util.Collection = [domain.Story{id=1964, version=1}, domain.Story{id=1965, version=1}]
+	domain.Trip::applications: java.util.Collection = [domain.Application{id=1995, version=0}, domain.Application{id=1996, version=0}]
+	domain.Trip::ranger: domain.Ranger = domain.Ranger{id=1938, version=0}
+	domain.Trip::category: domain.Category = domain.Category{id=1854, version=1}
+	domain.Trip::legalText: domain.LegalText = domain.LegalText{id=1927, version=0}
+
+Query C/11:
+A table with the number of times that each legal text’s been referenced.
+Query:  select t.legalText,count(t) from Trip t Group By t.legalText.id;
+Description: This query is used for getting a table with the number of times that every legal text has been referenced.
+Results:
+2 objects selected
+[domain.LegalText{id=1925, version=0}, 2]
+[domain.LegalText{id=1927, version=0}, 1]
+
+
+
+Query B/1:
+The minimum, the maximum, the average, and the standard deviation of the number of notes per trip.
+Query: select min(t.notes.size),max(t.notes.size),avg(t.notes.size),stddev(t.notes.size) from Trip t;
+Description: By using this query we can compute The minimum, the maximum, the average, and the standard deviation of the number of notes per trip.
+Results:
+1 object selected
+[1, 1, 1.0, 0.0]
+
+Query B/2:
+The minimum, the maximum, the average, and the standard deviation of the number of audit records per trip.
+Query: select min(t.audits.size),max(t.audits.size),avg(t.audits.size),stddev(t.audits.size) from Trip t;
+Description: This query gets the minimum, the maximun the average and the standard deviation of the number of audit records per trip.
+Results: 
+1 object selected
+[0, 3, 1.6667, 1.2472]
+
+Query B/3
+:
+The ratio of trips with an audit record.
+
+Query:  select sum(case when t.audits.size > 0 then 1.0 else 0.0 end)/count(DISTINCT t) as Audits_ratio from Trip t;
+
+Description: This query can be used to know the ratio of trips with audit records.
+Results: 
+1 object selected
+1.0
+
+Query B/4:
+The ratio of rangers who have registered their curricula.
+Query: select sum(case when r.curriculum IS NOT EMPTY then 1.0 else 0.0 end)/count(r) from Ranger r;
+Description: By using this query we can obtain the ratio of rangers who have a curriculum, that is the number of rangers with curriculum over 
+the total number of rangers, in our case is 0.5 because we have 2 rangers, one with curriculum and another without it.
+Results:
+1 object selected
+0.5
+
+
+
+Query B/5:
+The ratio of rangers whose curriculum’s been endorsed.
+Query: select sum(case when c.endorserRecords.size>=1 then 1.0 else 0.0 end)/count(r) as endorsed_ratio from Ranger r join r.curriculum c;
+
+
+Description: By using this query we can compute the ratio of rangers whose curriculum's been endorsed, that means the number of endorsed over the total number of ranger, we obtain 1.0 because all our rangers haver their curriculum endorsed.
+Results:
+1 object selected
+1.0
+
+Query B/6:
+
+The ratio of suspicious managers.
+Query: select sum(case when m.suspicious = 1 then 1.0 else 0.0 end)/count(m) as trueSuspicious_ratio from Manager m;
+Description: By using this query we can get the number of suspicious managers in relation to the total number of managers.
+Results:
+1 object selected
+0.5
+
+
+Query B/7:
+The ratio of suspicious rangers.
+Query: select sum(case when r.suspicious = 1 then 1.0 else 0.0 end)/count(r)  from Ranger r;
+Description: This query is used for knowing the ratio of suspicious rangers, which is the suspicious rangers over the total number of rangers.
+Results:
+1 object selected
+0.5
+
+
+
