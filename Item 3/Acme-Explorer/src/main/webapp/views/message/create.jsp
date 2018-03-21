@@ -16,7 +16,7 @@
 	<form:hidden path="sender" />
 
  	<form:label path="priority">
-		<spring:message code="ms.priority" />:
+	<spring:message code="ms.priority" />:
 	</form:label>
 	<form:select path="priority">
 		<form:option value="0" label="----" />
@@ -58,9 +58,9 @@
 
 	<input type="submit" name="save"
 		value="<spring:message code="ms.send"/>" />&nbsp;
-	<%-- <input type="button" name="cancel"
-		value="<spring:message code="message.cancel"/>"
-		onclick="javascript:relativeRedir('')" /> --%>
+	<input type="button" name="cancel"
+		value="<spring:message code="ms.back"/>"
+		onclick="javascript:relativeRedir('')" /> 
 
 
 

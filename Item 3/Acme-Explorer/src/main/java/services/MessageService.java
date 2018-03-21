@@ -52,8 +52,7 @@ public class MessageService {
 		return res;
 	}
 
-	// TODO lo que se guarda en el outbox al enviar un mensaje es una copia, no
-	// el mensaje
+	
 	public Message save(Message message) {
 		// Compruebo que no sea nulo el mensaje que me pasan
 		Assert.notNull(message);

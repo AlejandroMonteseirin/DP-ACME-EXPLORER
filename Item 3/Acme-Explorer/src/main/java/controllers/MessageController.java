@@ -47,10 +47,28 @@ public class MessageController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Message m, BindingResult binding) {
+	public ModelAndView save(@Valid domain.Message m, BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
-			result = this.createEditModelAndView(m);
+			int masDeUnError =0;
+			String errorMessage = "ms.commit.error";
+			if(m.getSubject()==null || m.getSubject()=="" || m.getBody()==null || m.getBody()==""){
+				errorMessage = "ms.be";
+			masDeUnError++;
+			}
+			if(m.getPriority()=="----"){
+				 errorMessage = "ms.beP";
+			masDeUnError++;
+			}
+			if(m.getRecipient()==null){
+				 errorMessage = "ms.beR";
+				 masDeUnError++;
+			}
+			if(masDeUnError >=2){
+				errorMessage = "ms.beVacio";
+			}
+			
+			result = createEditModelAndView(m,errorMessage);
 
 		} else {
 			try {
@@ -59,9 +77,14 @@ public class MessageController extends AbstractController {
 				result = new ModelAndView("redirect:/");
 
 			} catch (Throwable oops) {
+				String errorMessage = "ms.commit.error";
 
-				result = createEditModelAndView(m, "ms.commit.error");
-
+				if (oops.getMessage().contains("message.error")) {
+					errorMessage = oops.getMessage();
+				}
+				
+				result = createEditModelAndView(m, errorMessage);
+			
 			}
 		}
 
