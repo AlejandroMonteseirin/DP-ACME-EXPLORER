@@ -2,6 +2,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 
 import javax.validation.constraints.AssertTrue;
@@ -68,7 +69,7 @@ public class SurvivalClassService {
 
 		SurvivalClass sc;
 		sc = survivalClassRepository.save(survivalClass);
-
+		Assert.isTrue(survivalClass.getOrganizationDate().after(new Date(System.currentTimeMillis())),"survivalClass.pastdate");
 		Manager m = (Manager) actorService.findByPrincipal();
 		Collection<SurvivalClass> sC = m.getSurvivalClasses();
 		if (!sC.contains(survivalClass)) {
