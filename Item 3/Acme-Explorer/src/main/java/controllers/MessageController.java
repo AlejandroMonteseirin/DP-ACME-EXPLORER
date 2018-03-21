@@ -56,7 +56,7 @@ public class MessageController extends AbstractController {
 				errorMessage = "ms.be";
 			masDeUnError++;
 			}
-			if(m.getPriority()=="----"){
+			if(m.getPriority().equals("0")){
 				 errorMessage = "ms.beP";
 			masDeUnError++;
 			}
