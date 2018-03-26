@@ -28,6 +28,19 @@
 <jstl:out value="${pageNumber}" />
 .
 <br/>
+<jstl:if test="${isManager eq true}">
+<jstl:forEach var="number" begin ="1" end="${totalPages}">
+<jstl:if test="${number eq pageNumber}">
+<a class="current links" href="trip/manager/list.do?pageNumber=<jstl:out value="${number}"/>"><jstl:out value="${number}"/></a>
+</jstl:if>
+<jstl:if test="${number ne pageNumber}">
+<a class="links" href="trip/manager/list.do?pageNumber=<jstl:out value="${number}"/>"><jstl:out value="${number}"/></a>
+</jstl:if>
+&nbsp;&nbsp;&nbsp;&nbsp;
+</jstl:forEach>
+</jstl:if>
+
+<jstl:if test="${empty isManager}">
 <jstl:forEach var="number" begin ="1" end="${totalPages}">
 <jstl:if test="${number eq pageNumber}">
 <a class="current links" href="trip/list.do?pageNumber=<jstl:out value="${number}"/>"><jstl:out value="${number}"/></a>
@@ -37,6 +50,7 @@
 </jstl:if>
 &nbsp;&nbsp;&nbsp;&nbsp;
 </jstl:forEach>
+</jstl:if>
 <%-- [A+] El método que pagina el repositorio de Trip debe recibir dos parámetros, el 
 	tamaño de las páginas y la página que se desea consultar. Para ello creamos el siguiente
 	formulario --%>
