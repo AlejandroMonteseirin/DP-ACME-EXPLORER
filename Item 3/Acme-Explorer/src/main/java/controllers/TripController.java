@@ -123,6 +123,7 @@ public class TripController extends AbstractController {
 		if (pageSize == null)
 			pageSize = 5;
 
+		Boolean isManager = true;
 		m = (Manager) this.actorService.findByPrincipal();
 		visibleTrips = this.tripService.getTripsByManagerIdPageable(m.getId(),
 				pageNumber, pageSize).getContent();
@@ -135,6 +136,7 @@ public class TripController extends AbstractController {
 		result.addObject("pageNumber", pageNumber);
 		result.addObject("pageSize", pageSize);
 		result.addObject("totalPages", totalPages);
+		result.addObject("isManager",isManager);
 
 		return result;
 	}

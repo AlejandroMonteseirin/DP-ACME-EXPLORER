@@ -55,7 +55,7 @@
 		
 	<jstl:if test="${story.id != 0}">
 		<input type="submit" name="delete"
-		value="<spring:message code="story.delete" />"
+		value="<spring:message code="tag.delete" />"
 		onclick="return confirm('<spring:message code="audit.confirm.delete" />')" />
 	</jstl:if>
 	

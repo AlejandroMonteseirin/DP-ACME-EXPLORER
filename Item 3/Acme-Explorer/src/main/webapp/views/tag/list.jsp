@@ -83,7 +83,7 @@
 <jstl:if test="${not empty trip}">
 <input type="button" name="cancel"
 		value="<spring:message code="folder.back" />"
-		onclick="javascript: relativeRedir('trip/manager/edit.do?tripId=${trip.id}');" />
+		onclick="javascript: relativeRedir('trip/manager/display.do?tripId=${trip.id}');" />
 	<br />
 </jstl:if>
 
