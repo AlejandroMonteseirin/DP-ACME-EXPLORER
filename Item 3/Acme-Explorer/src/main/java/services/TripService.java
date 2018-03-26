@@ -212,8 +212,16 @@ public class TripService {
 				new Date(System.currentTimeMillis())));
 
 		// Eliminamos los stages del trip antes de eliminarlo
-		for (final Stage s : trip.getStages())
+		for (final Stage s : new ArrayList<>(trip.getStages())){
+			trip.getStages().remove(s);
 			this.stageService.delete(s);
+		}
+		trip.getLegalText().getTrips().remove(trip);
+		trip.getRanger().getTrips().remove(trip);
+		
+		Manager m = (Manager)actorService.findByPrincipal();
+		m.getTrips().remove(trip);
+		
 		this.tripRepository.delete(trip);
 	}
 
