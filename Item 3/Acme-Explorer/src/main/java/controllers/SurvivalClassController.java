@@ -205,8 +205,10 @@ public class SurvivalClassController extends AbstractController {
 		SurvivalClass s;
 		s = survivalClassService.create();
 		Collection<Trip> trips;
-
-		trips = tripService.getVisibleTrips();
+		//para que solo muestre sus trips y no los de otra gente
+		Manager m =(Manager) actorService.findByPrincipal();
+		trips = tripService.getTripsByManagerId(m.getId());
+		
 		result = this.createEditModelAndView(s);
 		result.addObject("trips", trips);
 
