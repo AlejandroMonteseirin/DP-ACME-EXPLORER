@@ -83,6 +83,10 @@ $(document).ready(function() {
 	<input type="submit" name="save"
 		value="<spring:message code="curriculum.save" />" />&nbsp;
 		
+	<input type="button" name="cancel"
+		value="<spring:message code="personalRecord.cancel" />"
+		onclick="javascript: relativeRedir('/curriculum/ranger/displayMyCurriculum.do');" />
+		
 <%-- 	<jstl:if test="${personalRecord.id != 0}">
 	<input type="submit" name="delete"
 		value="<spring:message code="curriculum.delete" />"

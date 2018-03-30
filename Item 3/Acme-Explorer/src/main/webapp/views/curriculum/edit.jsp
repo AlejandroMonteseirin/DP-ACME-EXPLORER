@@ -83,6 +83,10 @@ $(document).ready(function() {
 
 	<input type="submit" name="save"
 		value="<spring:message code="curriculum.save" />" />&nbsp;
+	
+	<input type="button" name="cancel"
+		value="<spring:message code="curriculum.cancel" />"
+		onclick="javascript: relativeRedir('/');" />
 
 	<jstl:if test="${curriculum.id != 0}">
 	<input type="submit" name="delete"

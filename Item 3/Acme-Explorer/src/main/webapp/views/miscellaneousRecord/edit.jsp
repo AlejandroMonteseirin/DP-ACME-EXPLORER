@@ -43,6 +43,10 @@
 
 	<input type="submit" name="save"
 		value="<spring:message code="miscellaneousRecord.save" />" />&nbsp;
+		
+	<input type="button" name="cancel"
+		value="<spring:message code="miscellaneousRecord.cancel" />"
+		onclick="javascript: relativeRedir('/curriculum/ranger/displayMyCurriculum.do');" />
 	
 	<jstl:if test="${miscellaneousRecord.id != 0}">
 	<input type="submit" name="delete"

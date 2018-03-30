@@ -49,9 +49,13 @@
 		value="<spring:message code="socialIdentity.save"/>" />
 		<!-- onclick="javascript: window.location.replace('welcome/index.do'); -->
 		
+	<input type="button" name="cancel"
+		value="<spring:message code="educationRecord.cancel" />"
+		onclick="javascript: relativeRedir('/curriculum/ranger/displayMyCurriculum.do');" />
+		
 	<jstl:if test="${socialIdentity.id != 0}">
 		<input type="submit" name="delete"
-			value="<spring:message code="socialIdentity.delete" />"
+			value="<spring:message code="educationRecord.delete" />"
 			onclick="return confirm('<spring:message code="socialIdentity.confirm.delete" />')" />&nbsp;
 	</jstl:if>
 	

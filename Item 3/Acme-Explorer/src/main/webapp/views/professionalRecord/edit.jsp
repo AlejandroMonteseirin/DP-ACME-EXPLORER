@@ -66,6 +66,11 @@
 		value="<spring:message code="professionalRecord.save" />" />&nbsp; 
 	
 	<jstl:if test="${professionalRecord.id != 0}">
+	
+	<input type="button" name="cancel"
+		value="<spring:message code="professionalRecord.cancel" />"
+		onclick="javascript: relativeRedir('/curriculum/ranger/displayMyCurriculum.do');" />
+	
 	<input type="submit" name="delete"
 		value="<spring:message code="professionalRecord.delete" />" /> 
 	</jstl:if>
