@@ -13,9 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.Authority;
+import security.UserAccount;
+import security.UserAccountService;
 import utilities.AbstractTest;
 import domain.Application;
-import domain.Folder;
 import domain.Manager;
 import domain.Trip;
 
@@ -27,10 +29,10 @@ public class ManagerServiceTest extends AbstractTest {
 
 	@Autowired
 	private ManagerService managerService;
-	 @Autowired
-	 private FolderService folderService;
 	@Autowired
 	private ApplicationService applicationService;
+	@Autowired
+	private UserAccountService userAccountService;
 //	@Autowired
 //	private TripService tripService;
 	
@@ -46,6 +48,18 @@ public class ManagerServiceTest extends AbstractTest {
 		Manager m,saved;
 		Collection<Manager> managers;
 		m = managerService.create();
+		
+		UserAccount ua = userAccountService.create();
+		Collection<Authority> auth = new ArrayList<Authority>();
+		Authority au = new Authority();
+		au.setAuthority(Authority.MANAGER);
+		auth.add(au);
+		ua.setAuthorities(auth);
+		ua.setEnabled(true);
+		ua.setUsername("prueba");
+		ua.setPassword("prueba");
+		m.setUserAccount(ua);
+		
 		m.setName("Juanjo");
 		m.setSurname("Peña");
 		saved = managerService.save(m);	
@@ -80,12 +94,6 @@ public class ManagerServiceTest extends AbstractTest {
 
 	}
 
-	@Test
-	public void testGetSuspiciousManagersRatio() {
-
-		Assert.isTrue(managerService.getSuspiciousManagersRatio() == 1.0);
-
-	}
 //
 	@Test
 	public void testGetManagerFromApplicationId() {

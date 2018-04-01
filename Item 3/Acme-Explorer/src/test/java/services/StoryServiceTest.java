@@ -35,30 +35,30 @@ public class StoryServiceTest extends AbstractTest {
 	// Tests ----------------------------------------------
 	@Test
 	public void testCreateSaveAndDelete() {
-//		
-//		Trip trip;
-//		trip = (Trip) tripService.findAll().toArray()[0];
-//		
-//		authenticate("explorer1");
-//		final Story story = this.storyService.create(trip);
-//		Assert.notNull(story, "fallo en el create,es null");
-//		story.setTitle("El viaje a cuenca");
-//		story.setText("El viaje a cuenca estuvo fabuloso,fuimos en una camioneta y vimos toda cuenca, 10/10 muy recomendado");
-//		final Collection<String> attachmentURLs = new ArrayList<>();
-//		attachmentURLs.add("https://www.cuenca.es");
-//		attachmentURLs.add("https://www.IglesiaDeCuenca.es");
-//		attachmentURLs.add("https://www.ProvinciaDeCuenca.com");
-//		story.setAttachmentURLs(attachmentURLs);
-//		story.setTrip(trip);
-//
-//		final Story storySaved = this.storyService.save(story);
-//		Assert.notNull(storySaved, "fallo en el save,es null");
-//		
-//		Integer storyId = storySaved.getId();
-//		storyService.delete(storySaved);
-//		Assert.isTrue(storyService.findOne(storyId)==null);
-//
-//		super.authenticate(null);
+		
+		Trip trip;
+		trip = (Trip) tripService.findAll().toArray()[0];
+		
+		authenticate("explorer1");
+		final Story story = this.storyService.create();
+		Assert.notNull(story, "fallo en el create,es null");
+		story.setTitle("El viaje a cuenca");
+		story.setText("El viaje a cuenca estuvo fabuloso,fuimos en una camioneta y vimos toda cuenca, 10/10 muy recomendado");
+		final Collection<String> attachmentURLs = new ArrayList<>();
+		attachmentURLs.add("https://www.cuenca.es");
+		attachmentURLs.add("https://www.IglesiaDeCuenca.es");
+		attachmentURLs.add("https://www.ProvinciaDeCuenca.com");
+		story.setAttachmentURLs(attachmentURLs);
+		story.setTrip(trip);
+
+		final Story storySaved = this.storyService.save(story);
+		Assert.notNull(storySaved, "fallo en el save,es null");
+		
+		Integer storyId = storySaved.getId();
+		storyService.delete(storySaved);
+		Assert.isTrue(storyService.findOne(storyId)==null);
+
+		super.authenticate(null);
 
 	}
 

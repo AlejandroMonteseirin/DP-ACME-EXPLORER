@@ -95,9 +95,11 @@ public class ManagerService {
 							.getPassword(), null));
 		}
 
-		String tlf = configurationService.checkPhoneNumber(manager
-				.getPhoneNumber());
-		manager.setPhoneNumber(tlf);
+		if (manager.getPhoneNumber() != null) {
+			String tlf = configurationService.checkPhoneNumber(manager
+					.getPhoneNumber());
+			manager.setPhoneNumber(tlf);
+		}
 
 		if (manager.getId() == 0) {
 			manager.getUserAccount().setEnabled(true);

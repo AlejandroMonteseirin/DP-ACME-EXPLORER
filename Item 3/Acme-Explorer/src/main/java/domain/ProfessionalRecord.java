@@ -69,7 +69,6 @@ public class ProfessionalRecord extends DomainEntity {
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	@NotNull
 	@Past
 	public Date getEndDate() {
 		return endDate;

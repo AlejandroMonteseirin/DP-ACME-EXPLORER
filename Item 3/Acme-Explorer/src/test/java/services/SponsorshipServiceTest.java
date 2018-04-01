@@ -35,7 +35,8 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 	@Test
 	public void createAndSaveSponsorship() {
-
+		authenticate("sponsor1");
+		
 		Sponsorship sp = sponsorshipService.create();
 		sp.setBannerURL("http://marca.com");
 		sp.setInfoPageLink("pagina 1");

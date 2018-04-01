@@ -1,10 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -15,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.Manager;
 import domain.Note;
 import domain.Trip;
 
@@ -30,10 +26,6 @@ public class NoteServiceTest extends AbstractTest {
 	private NoteService		noteService;
 	@Autowired
 	private TripService		tripService;
-	@Autowired
-	private AuditorService	auditorService;
-	@Autowired
-	private ActorService	actorService;
 
 
 	@Test
@@ -42,7 +34,6 @@ public class NoteServiceTest extends AbstractTest {
 
 		Note n, nSaved;
 		Trip trips;
-		final Collection<Note> notesBefore = new ArrayList<>();
 
 		trips = (Trip) this.tripService.findAll().toArray()[0];
 		n = this.noteService.create();
@@ -54,22 +45,20 @@ public class NoteServiceTest extends AbstractTest {
 
 		nSaved = this.noteService.save(n);
 		System.out.println(nSaved);
-		//notesBefore = this.noteService.findAll();
-		//Assert.isTrue(notesBefore.contains(nSaved));
+		Collection<Note> notesBefore = this.noteService.findAll();
+		Assert.isTrue(notesBefore.contains(nSaved));
 		
 		super.authenticate(null);
 
 	}
 	
-	@Test
-	public void notesByManagerTrips(){
-		authenticate("manager2");
-		Manager m;
-		Collection<Note> notes;
-		
-		m = (Manager) actorService.findByPrincipal();
-		notes = noteService.getNotesToManagerTrips(m.getId());
-		
-	}
+//	@Test
+//	public void notesByManagerTrips(){
+//		authenticate("manager2");
+//		Manager m;
+//		
+//		m = (Manager) actorService.findByPrincipal();
+//		
+//	}
 
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +44,6 @@ public class TripServiceTest extends AbstractTest{
 	private CategoryService categoryService;
 	@Autowired
 	private ValueService valueService;
-	@Autowired
-	private ConfigurationService configurationService;
 	
 	// TESTS ------------------------
 	@Test
@@ -102,14 +99,14 @@ public class TripServiceTest extends AbstractTest{
 		trip.setPrice(1500.00);
 		trip.setExplorerRequirements(requirements);
 		trip.setPublicationDate(Date.valueOf("2018-11-11"));
-		trip.setStartDate(Date.valueOf("2018-07-07"));
-		trip.setEndDate(Date.valueOf("2018-08-08"));
+		trip.setStartDate(Date.valueOf("2019-07-07"));
+		trip.setEndDate(Date.valueOf("2020-08-08"));
 		trip.setLegalText(legalText);
 		trip.setRanger(ranger);
 		trip.setValues(values);
 		trip.setStages(stages);
 		
-		Assert.isTrue(trip.getStatus().equals("ACCEPTED"));
+		Assert.isTrue(trip.getStatus().equals("ACTIVE"));
 		
 		
 		tSaved = tripService.save(trip);
@@ -120,7 +117,16 @@ public class TripServiceTest extends AbstractTest{
 		Assert.isTrue(tSaved.equals(tFound));
 		Assert.notNull(tFound);
 		
+		//Cancelamos
+		
+		String cancelReason = "Reason";
+		tFound.setPublicationDate(Date.valueOf("2016-11-11"));
+		tripService.cancelTripAferPublication(tFound, cancelReason);
+		Assert.isTrue(tFound.getStatus().equals("CANCELLED"));
+		Assert.isTrue(tFound.getCancelReason().contains(cancelReason));
+		
 		//Probamos delete
+		tFound.setPublicationDate(Date.valueOf("2018-11-11"));
 		tripService.delete(tSaved);
 		tFound = tripService.findOne(tripId);
 		Assert.isTrue(tFound==null);
@@ -128,282 +134,15 @@ public class TripServiceTest extends AbstractTest{
 	}
 
 	
-//	trip = tripService.create();
-//	stage = stageService.findOne(2513);
-//	legalText = legalTextService.findOne(2486);
-//	ranger = rangerService.findOne(2498);
-//	category = categoryService.findOne(2418);
-//	values = valueService.findOne(2540);
-	
-	@Test
-	public void testCancelTripNotStarted(){
-		super.authenticate("manager1");
-		
-		Trip trip;
-		List<Stage> allStages;
-		Stage stage1;
-		Stage stage2;
-		Collection<Stage> stages=new ArrayList<Stage>();
-		List<LegalText> legalTexts;
-		LegalText legalText;
-		List<Ranger> rangers;
-		Ranger ranger;
-		List<Category> categories;
-		Category category;
-		String requirements;
-		Collection<Value> values;
-		Trip tFound, tSaved;
-		Integer tripId;
-		
-		trip = tripService.create();
-		allStages = (List<Stage>) stageService.findAll();
-		stage1 = allStages.get(0);
-		stage2 = allStages.get(1);
-		stages.add(stage1);
-		stages.add(stage2);
-		legalTexts = ((List<LegalText>) legalTextService.findAll());
-		legalText = legalTexts.get(0);
-		rangers = (List<Ranger>) rangerService.findAll();
-		ranger = rangers.get(0);
-		categories = (List<Category>) categoryService.findAll();
-		category = categories.get(0);
-		requirements = "req2";
-		values = valueService.findAll();
-		
-		
-		Assert.notNull(trip);
-		
-		trip.setCategory(category);
-		trip.setTitle("Titulo");
-		trip.setDescription("descripcion");
-		trip.setPrice(1500.00);
-		trip.setExplorerRequirements(requirements);
-		trip.setPublicationDate(Date.valueOf("2016-11-11"));
-		trip.setStartDate(Date.valueOf("2018-07-07"));
-		trip.setEndDate(Date.valueOf("2018-08-08"));
-		trip.setLegalText(legalText);
-		trip.setRanger(ranger);
-		trip.setValues(values);
-		trip.setStages(stages);
-		
-		tSaved = tripService.save(trip);
-		
-		
-		tripId = tSaved.getId();
-		tFound = tripService.findOne(tripId);
-
-		
-//		Trip trip = tripService.findOne(2535);
-		Assert.isTrue(tFound.getStatus().equals("ACTIVE"));
-		tripService.cancelTripNotStarted(tFound);
-		Assert.isTrue(tFound.getStatus().equals("CANCELLED"));
-		super.authenticate(null);
-	}
-	
-	@Test
-	public void testCancelTripAfterPublication(){
-		super.authenticate("manager1");
-		//Trip trip = tripService.findOne(2534);
-		Trip trip;
-		List<Stage> allStages;
-		Stage stage1;
-		Stage stage2;
-		Collection<Stage> stages=new ArrayList<Stage>();
-		List<LegalText> legalTexts;
-		LegalText legalText;
-		List<Ranger> rangers;
-		Ranger ranger;
-		List<Category> categories;
-		Category category;
-		String requirements;
-		Collection<Value> values;
-		Trip tFound, tSaved;
-		Integer tripId;
-		
-		trip = tripService.create();
-		allStages = (List<Stage>) stageService.findAll();
-		stage1 = allStages.get(0);
-		stage2 = allStages.get(1);
-		stages.add(stage1);
-		stages.add(stage2);
-		legalTexts = ((List<LegalText>) legalTextService.findAll());
-		legalText = legalTexts.get(0);
-		rangers = (List<Ranger>) rangerService.findAll();
-		ranger = rangers.get(0);
-		categories = (List<Category>) categoryService.findAll();
-		category = categories.get(0);
-		requirements = "req3";
-		values = valueService.findAll();
-		
-		
-		Assert.notNull(trip);
-		
-		trip.setCategory(category);
-		trip.setTitle("Titulo");
-		trip.setDescription("descripcion");
-		trip.setPrice(1500.00);
-		trip.setExplorerRequirements(requirements);
-		trip.setPublicationDate(Date.valueOf("2016-11-11"));
-		trip.setStartDate(Date.valueOf("2018-07-07"));
-		trip.setEndDate(Date.valueOf("2018-08-08"));
-		trip.setLegalText(legalText);
-		trip.setRanger(ranger);
-		trip.setValues(values);
-		trip.setStages(stages);
-		
-		tSaved = tripService.save(trip);
-		
-		
-		tripId = tSaved.getId();
-		tFound = tripService.findOne(tripId);
-		
-		
-		Assert.isTrue(tFound.getStatus().equals("ACTIVE"));
-		String cancelReason = "Reason";
-		tripService.cancelTripAferPublication(tFound, cancelReason);
-		Assert.isTrue(tFound.getStatus().equals("CANCELLED"));
-		Assert.isTrue(tFound.getCancelReason().contains(cancelReason));
-		super.authenticate(null);
-	}
 	
 	
-//	@Test
-//	public void TestGetTripPrice(){
-//		super.authenticate("manager1");
-//		//Trip trip = tripService.findOne(2534);
-//		
-//		Trip trip;
-//		List<Stage> allStages;
-//		Stage stage1;
-//		Stage stage2;
-//		Collection<Stage> stages=new ArrayList<Stage>();
-//		List<LegalText> legalTexts;
-//		LegalText legalText;
-//		List<Ranger> rangers;
-//		Ranger ranger;
-//		List<Category> categories;
-//		Category category;
-//		Collection<String> requirements;
-//		Collection<Value> values;
-//		Trip tFound, tSaved;
-//		Integer tripId;
-//		
-//		trip = tripService.create();
-//		allStages = (List<Stage>) stageService.findAll();
-//		stage1 = allStages.get(0);
-//		stage1.setPrice(200.0);
-//		stage2 = allStages.get(1);
-//		stage2.setPrice(500.0);
-//		stages.add(stage1);
-//		stages.add(stage2);
-//		legalTexts = ((List<LegalText>) legalTextService.findAll());
-//		legalText = legalTexts.get(0);
-//		rangers = (List<Ranger>) rangerService.findAll();
-//		ranger = rangers.get(0);
-//		categories = (List<Category>) categoryService.findAll();
-//		category = categories.get(0);
-//		requirements = new ArrayList<>();
-//		values = valueService.findAll();
-//		
-//		requirements.add("Requisito 1");
-//		
-//		Assert.notNull(trip);
-//		
-//		trip.setCategory(category);
-//		trip.setTitle("Titulo");
-//		trip.setDescription("descripcion");
-//	//	trip.setPrice(1500.00);
-//		trip.setExplorerRequirements(requirements);
-//		trip.setPublicationDate(Date.valueOf("2016-11-11"));
-//		trip.setStartDate(Date.valueOf("2018-07-07"));
-//		trip.setEndDate(Date.valueOf("2018-08-08"));
-//		trip.setLegalText(legalText);
-//		trip.setRanger(ranger);
-//		trip.setValues(values);
-//		trip.setStages(stages);
-//		
-//		tSaved = tripService.save(trip);
-//		
-//		tripId = tSaved.getId();
-//		tFound = tripService.findOne(tripId);
-//		
-//		System.out.println(trip.getPrice());
-//		System.out.println(tripService.getTripPrice(tFound));
-//		System.out.println(configService.getTax());
-//		System.out.println(trip.getPrice()*configService.getTax());
-//		
-//		Assert.isTrue(tripService.getTripPrice(tFound) == trip.getPrice()*configService.getTax());
-//		super.authenticate(null);
-//		
-//	}
 	
-//	@Test
-//	public void testTripsByKeyWord(){
-//		Trip trip;
-//		List<Stage> allStages;
-//		Stage stage1;
-//		Stage stage2;
-//		Collection<Stage> stages=new ArrayList<Stage>();
-//		List<LegalText> legalTexts;
-//		LegalText legalText;
-//		List<Ranger> rangers;
-//		Ranger ranger;
-//		List<Category> categories;
-//		Category category;
-//		Collection<String> requirements;
-//		Collection<Value> values;
-//		
-//		trip = tripService.create();
-//		allStages = (List<Stage>) stageService.findAll();
-//		stage1 = allStages.get(0);
-//		stage2 = allStages.get(1);
-//		stages.add(stage1);
-//		stages.add(stage2);
-//		legalTexts = ((List<LegalText>) legalTextService.findAll());
-//		legalText = legalTexts.get(0);
-//		rangers = (List<Ranger>) rangerService.findAll();
-//		ranger = rangers.get(0);
-//		categories = (List<Category>) categoryService.findAll();
-//		category = categories.get(0);
-//		requirements = new ArrayList<>();
-//		values = valueService.findAll();
-//		
-//		requirements.add("Requisito 1");
-//		
-//		Assert.notNull(trip);
-//		
-//		trip.setCategory(category);
-//		trip.setTitle("Titulo");
-//		trip.setDescription("descripcion");
-//		trip.setPrice(1500.00);
-//		trip.setExplorerRequirements(requirements);
-//		trip.setPublicationDate(Date.valueOf("2016-11-11"));
-//		trip.setStartDate(Date.valueOf("2018-07-07"));
-//		trip.setEndDate(Date.valueOf("2018-08-08"));
-//		trip.setLegalText(legalText);
-//		trip.setRanger(ranger);
-//		trip.setValues(values);
-//		trip.setStages(stages);
-//		
-//		tripService.save(trip);
-//		
-//		Collection<Trip> result = tripService.tripsByKeyWord("descripcion");
-//		
-//		Assert.isTrue(result.contains(trip));
-//	}
+	
 
 	@Test
 	public void searchCriteria(){
-		String word = "trip";
-		Double minPrice = 0.;
-		Double maxPrice = 99999.0;
-		Date startDate = Date.valueOf("2018-07-07");
-		Date finishDate = Date.valueOf("2018-08-08");
-		
-		//Collection<Trip> trips = tripService.findTripsBySearchCriteria(minPrice,maxPrice,startDate,finishDate,word);
 		Collection<Trip> trips = tripService.findTripsBySearchCriteria(null,3000.,null,null,null);
 		Assert.notNull(trips);
-//		System.out.println(trips);
 	}
 	
 	@Test
@@ -411,14 +150,15 @@ public class TripServiceTest extends AbstractTest{
 		Collection<Trip> endedTrips;
 		
 		endedTrips = tripService.getEndedTrips();
+		Assert.notNull(endedTrips);
 	}
 
 	@Test
 	public void paginatedTripRepository(){
 		Collection<Trip> trips;
 		
-		trips = tripService.paginatedTripsSearch(0,5).getContent();
-		Assert.isTrue(trips.size()==1);
+		trips = tripService.paginatedTripsSearch(1,5).getContent();
+		Assert.isTrue(trips.size()>0);
 		
 		Trip t = (Trip) trips.toArray()[0];
 		
@@ -428,9 +168,10 @@ public class TripServiceTest extends AbstractTest{
 	@Test
 	public void searchAllTripsByCategory(){
 		Collection<Trip> trips;
-		Collection<Trip> trips2 = new ArrayList<>();
+		List<Category> categories = (List<Category>) categoryService.findAll();
+		trips = tripService.getTripsByCategory(categories.get(0).getId());
+		Assert.notNull(trips);
 		
-//		trips = tripService.showAllTripsByCategory(3348, trips2);
 	}
 
 }

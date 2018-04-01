@@ -88,10 +88,11 @@ public class SponsorService {
 							.getPassword(), null));
 		}
 
+		if(sponsor.getPhoneNumber()!=null){
 		String tlf = configurationService.checkPhoneNumber(sponsor
 				.getPhoneNumber());
 		sponsor.setPhoneNumber(tlf);
-
+		}
 		if (sponsor.getId() == 0) {
 			sponsor.getUserAccount().setEnabled(true);
 		}

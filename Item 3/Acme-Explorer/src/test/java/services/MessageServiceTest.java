@@ -1,6 +1,5 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -12,10 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import security.LoginService;
 import utilities.AbstractTest;
 import domain.Actor;
-import domain.Auditor;
 import domain.Folder;
 import domain.Message;
 
@@ -29,19 +26,18 @@ public class MessageServiceTest extends AbstractTest {
 	private MessageService messageService;
 	@Autowired
 	private ActorService actorService;
-	@Autowired
-	private FolderService folderService;
 
 	@Test
 	public void testCreateMessage() {
+		authenticate("manager1");
 		Message message = null;
 		message = messageService.create();
 		Assert.notNull(message);
-
+		authenticate(null);
 	}
 
 	@Test
-	public void testSaveMessage() {
+	public void testSaveAndDeleteMessage() {
 		authenticate("manager1");
 		Message message, saved;
 		Collection<Message> messages;
@@ -50,40 +46,57 @@ public class MessageServiceTest extends AbstractTest {
 		message.setBody("body1");
 		message.setPriority("HIGH");
 		message.setSender(actorService.findByPrincipal());
-		message.setRecipient(actorService.findOne(3290));
+		message.setRecipient(actorService.findByPrincipal());
 		saved = messageService.save(message);
 		Assert.notNull(saved);
 		messages = messageService.findAll();
 		Assert.isTrue(messages.contains(saved));
-		authenticate(null);
-	}
-
-	@Test
-	public void testDeleteMessageFromTrashBox() {
-		authenticate("manager1");
-		Collection<Message> messages;
-		Message message = messageService.findOne(3445);
-		messageService.delete(message);
-		messages = messageService.findAll();
-		Assert.isTrue(!messages.contains(message));
-		authenticate(null);
-	}
-
-	@Test
-	public void testDeleteMessageFromOther() {
-		authenticate("manager1");
-		Folder trashbox=null;
+		
+		//Delete
+		
 		Actor manager1 = actorService.findByPrincipal();
-		Message message = messageService.findOne(3361);
-		messageService.delete(message);
+		messageService.delete(saved);
+		Folder trashbox = null;
 		for(Folder f:manager1.getFolders()){
 			if(f.getName().equals("trash box")){
 				trashbox = f;
 			}
 		}
-		Assert.isTrue(trashbox.getMessages().contains(message));
+		Assert.isTrue(trashbox.getMessages().contains(saved));
+		messageService.delete(saved);
+		messages = messageService.findAll();
+		Assert.isTrue(!messages.contains(saved));
+		
 		authenticate(null);
 	}
+
+//	@Test
+//	public void testDeleteMessageFromTrashBox() {
+//		authenticate("manager1");
+//		List<Message> messages;
+//		messages = (List<Message>) messageService.findAll();
+//		Message message = messages.get(0);
+//		
+//		authenticate(null);
+//	}
+//
+//	@Test
+//	public void testDeleteMessageFromOther() {
+//		authenticate("manager1");
+//		Folder trashbox=null;
+//		Actor manager1 = actorService.findByPrincipal();
+//		List<Message> messages;
+//		messages = (List<Message>) messageService.findAll();
+//		Message message = messages.get(0);
+//		messageService.delete(message);
+//		for(Folder f:manager1.getFolders()){
+//			if(f.getName().equals("trash box")){
+//				trashbox = f;
+//			}
+//		}
+//		Assert.isTrue(trashbox.getMessages().contains(message));
+//		authenticate(null);
+//	}
 
 	// @Test
 	// public void createAndSaveMessage() {

@@ -13,11 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.Authority;
 import security.UserAccount;
 import security.UserAccountService;
 import utilities.AbstractTest;
 import domain.Actor;
-import domain.Folder;
 import domain.Manager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -74,13 +74,12 @@ public class ActorServiceTest extends AbstractTest {
 		Actor pepon= (Actor) actorService.findAll().toArray()[0];
 		pepon.setSuspicious(true); //debe ser sospechoso para poder ser baneado
 		actorService.banActor(pepon);
-		Actor peponPostBan =(Actor) actorService.findAll().toArray()[0];
 	}
 	@Test
 	public void testUnBan() {
 		Actor pepon= (Actor) actorService.findAll().toArray()[0];
+		pepon.getUserAccount().setEnabled(false);
 		actorService.unbanActor(pepon);
-		Actor peponPostUnban =(Actor) actorService.findAll().toArray()[0];
 	}
 	@Test
 	public void updatePhone(){
@@ -93,14 +92,12 @@ public class ActorServiceTest extends AbstractTest {
 		
 		
 	}
-/*
+
 	@Test
 	public void testCreateActor() {
 
-		Actor actor = null;
 		Actor a = managerService.create();
-		actor = actorService.create(a);
-		Assert.notNull(actor);
+		Assert.notNull(a);
 
 	}
 
@@ -112,50 +109,26 @@ public class ActorServiceTest extends AbstractTest {
 		Collection<Authority> authorities = new ArrayList<Authority>();
 		authorities.add(a);
 		u.setAuthorities(authorities);
-		Actor actor, saved;
+		Actor saved;
 		Collection<Actor> actors;
 		Manager m = managerService.create();
-		actor = actorService.create(m);
-		actor.setName("Name1");
-		actor.setSurname("Surname1");
-		saved = actorService.save(actor);
+		m.setName("Name1");
+		m.setSurname("Surname1");
+		saved = actorService.save(m);
 		actors = actorService.findAll();
 		Assert.isTrue(actors.contains(saved));
 
 	}
-	
-	@Test
-	public void testDeleteActor(){
-		Actor actor,saved;
-		Collection<Actor> actors;
-		Manager m = managerService.create();
-		actor = actorService.create(m);
-		actor.setName("Name1");
-		actor.setSurname("Surname1");
-		saved = actorService.save(actor);
-		actorService.delete(saved);
-		actors = actorService.findAll();
-		Assert.isTrue(!actors.contains(saved));
-		
-		
-	}
+
 	@Test
 	public void testFindOneActor(){
-		Actor actor,saved;
+		Actor saved;
 		Manager m = managerService.create();
-		actor = actorService.
-		actor.setName("Name1");
-		actor.setSurname("Surname1");
-		saved = actorService.save(actor);
+		m.setName("Name1");
+		m.setSurname("Surname1");
+		saved = actorService.save(m);
 		int actorId = saved.getId();
 		Actor a = actorService.findOne(actorId);
 		Assert.isTrue(a.equals(saved));
 	}
-*/
-	
-	
-	
-	
-	
-	
 }

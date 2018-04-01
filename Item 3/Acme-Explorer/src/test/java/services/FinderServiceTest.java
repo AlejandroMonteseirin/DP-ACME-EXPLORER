@@ -1,11 +1,8 @@
 package services;
 
-import java.sql.Date;
-import java.util.Collection;
 
 import javax.transaction.Transactional;
 
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import domain.Finder;
-import domain.MiscellaneousRecord;
 
 import utilities.AbstractTest;
 
@@ -30,6 +26,7 @@ public class FinderServiceTest extends AbstractTest{
 	
 	@Test
 	public void testTodo() {
+	super.authenticate("explorer1");
 	Finder er;
 	Finder erSav;
 
@@ -39,9 +36,6 @@ public class FinderServiceTest extends AbstractTest{
 	er.setKeyWord("aprobado");
 	erSav =finderService.save(er);
 	Assert.notNull(erSav, "El objeto guardado es nulo");
-	this.finderService.delete(erSav);
-	final Collection<Finder> erDel = this.finderService.findAll();
-	Assert.isTrue(!erDel.contains(erSav), "No borrado correctamente");
 	super.authenticate(null);
 	}
 
