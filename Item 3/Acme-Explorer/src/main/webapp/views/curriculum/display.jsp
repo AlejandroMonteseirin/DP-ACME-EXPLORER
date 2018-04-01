@@ -9,7 +9,7 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<jstl:if test="${empty curriculum}">
+<jstl:if test="${empty curriculum and (rangerCurriculum.id eq curriculum.id)}">
 <a href="curriculum/ranger/create.do"><spring:message code="curriculum.create" /></a>
 </jstl:if>
 
@@ -60,13 +60,14 @@
 	</li>
 	
 	<br/>
-	<security:authorize access="hasRole('RANGER')">
+	<%-- <security:authorize access="hasRole('RANGER')"> --%>
 	<jstl:if test="${rangerCurriculum.id eq curriculum.id}">
 	<input type="button" name="edit"
 		value="<spring:message code="personalRecord.edit" />"
 		onclick="javascript: relativeRedir('personalRecord/ranger/edit.do?personalRecordId=${curriculum.getPersonalRecord().getId()}')" />
 	
 	<br/>
+	</jstl:if>
 		<%-- MOSTRAMOS LOS DATOS DEL Educational RECORD --%>
 	<jstl:if test="${not empty curriculum.getEducationRecords()}">
 	<u><b><spring:message code="curriculum.educationRecord"></spring:message></b></u>
@@ -282,6 +283,8 @@
 
 <%-- BOTONES, SOLO LOS RANGERS PUEDEN EDITAR Y ELIMINAR SUS CURRICULUMS --%>
 
+<security:authorize access="hasRole('RANGER')">
+	<jstl:if test="${rangerCurriculum.id eq curriculum.id}">
 <form:form action="curriculum/ranger/edit.do" modelAttribute="curriculum">
 	<form:hidden path="id"/>
 	<form:hidden path="version" />
