@@ -1,6 +1,5 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -12,11 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import security.LoginService;
 import utilities.AbstractTest;
-import domain.Actor;
 import domain.Folder;
-import domain.Message;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
@@ -27,16 +23,14 @@ public class FolderServiceTest extends AbstractTest {
 	// Service under test
 	@Autowired
 	private FolderService folderService;
-	@Autowired
-	private ActorService actorService;
 
 	@Test
 	public void testCreateFolder() {
-		//authenticate("manager1");
+		authenticate("manager1");
 		Folder f = null;
 		f = folderService.create();
 		Assert.notNull(f);
-		//authenticate(null);
+		authenticate(null);
 	}
 
 	@Test

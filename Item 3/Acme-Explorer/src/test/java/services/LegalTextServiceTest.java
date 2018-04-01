@@ -1,8 +1,6 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -31,29 +29,28 @@ public class LegalTextServiceTest extends AbstractTest{
 	// Tests ----------------------------------------------
 	@Test
 	public void testCreateSaveAndDelete() {
+		super.authenticate("admin");
+		LegalText legalText;
 
-//		LegalText legalText;
-//
-//		legalText = legalTextService.create();
-//		Assert.notNull(legalText, "fallo en el create,es null");
-//
-//		legalText
-//				.setBody("La organización no se hace responsable de la muerte por ataque de oso");
-//		legalText.setTitle("Articulo 23, Ataques de Osos Homicidas");
-//		List<String> applicableLaws = new ArrayList<>();
-//		applicableLaws.add("ley 15");
-//		applicableLaws.add("Articulo 33, Osos pardos");
-//		legalText.setSavedMode("DRAFT MODE");
-//		LegalText legalTextSaved = legalTextService.save(legalText);
-//		Assert.notNull(legalTextSaved, "fallo en el save,es null");
-//		Collection<LegalText> legalTextBefore = legalTextService.findAll();
-//		Assert.isTrue(legalTextBefore.contains(legalTextSaved),
-//				"fallo en el Save,no se guardo");
-//		legalTextService.delete(legalTextSaved);
-//		Collection<LegalText> legalTextAfter = legalTextService.findAll();
-//
-//		Assert.isTrue(!legalTextAfter.contains(legalTextSaved),
-//				"fallo en el delete,no se borró");
+		legalText = legalTextService.create();
+		Assert.notNull(legalText, "fallo en el create,es null");
+
+		legalText
+				.setBody("La organización no se hace responsable de la muerte por ataque de oso");
+		legalText.setTitle("Articulo 23, Ataques de Osos Homicidas");
+		legalText.setSavedMode("DRAFT MODE");
+		legalText.setApplicableLaws("osos asesinos");
+		
+		LegalText legalTextSaved = legalTextService.save(legalText);
+		Assert.notNull(legalTextSaved, "fallo en el save,es null");
+		Collection<LegalText> legalTextBefore = legalTextService.findAll();
+		Assert.isTrue(legalTextBefore.contains(legalTextSaved),
+				"fallo en el Save,no se guardo");
+		legalTextService.delete(legalTextSaved);
+		Collection<LegalText> legalTextAfter = legalTextService.findAll();
+
+		Assert.isTrue(!legalTextAfter.contains(legalTextSaved),
+				"fallo en el delete,no se borró");
 
 	}
 		

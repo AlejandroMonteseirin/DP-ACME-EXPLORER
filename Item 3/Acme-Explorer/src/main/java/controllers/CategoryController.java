@@ -134,6 +134,7 @@ public class CategoryController extends AbstractController{
 		result = new ModelAndView("category/edit");
 		categories = categoryService.findAll();
 		categories.remove(category);
+		categories.removeAll(category.getChildCategories());
 		
 		result.addObject("category", category);
 		result.addObject("message", message);

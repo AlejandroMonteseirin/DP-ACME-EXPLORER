@@ -32,7 +32,7 @@ public class SurvivalClassTest extends AbstractTest{
 	private TripService tripService;
 	
 		@Test
-		public void createSaveAnDelete(){
+		public void createSaveAndDelete(){
 			authenticate("manager1");
 			
 			SurvivalClass c;
@@ -47,7 +47,7 @@ public class SurvivalClassTest extends AbstractTest{
 			
 			c.setDescription("description");
 			c.setLocation(l);
-			c.setOrganizationDate(Date.valueOf("2017-07-30"));
+			c.setOrganizationDate(Date.valueOf("2019-07-30"));
 			c.setTitle("title");
 			c.setTrip(trip);
 		

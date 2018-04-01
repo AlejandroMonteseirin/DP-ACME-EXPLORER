@@ -2,7 +2,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -13,9 +12,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.Authority;
+import security.UserAccount;
+import security.UserAccountService;
 import utilities.AbstractTest;
 import domain.Auditor;
-import domain.Folder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
@@ -26,29 +27,35 @@ public class AuditorServiceTest extends AbstractTest {
 	// Service under test ---------------------------------
 	@Autowired
 	private AuditorService auditorService;
-
-	// @Autowired
-	// private AuditService auditService;
-	// @Autowired
-	// private FolderService folderService;
-	// @Autowired
-	// private MessageService messageService;
+	@Autowired
+	private UserAccountService userAccountService;
 
 	// Tests ----------------------------------------------
 	@Test
 	public void testCreateSaveDelete() {
-		Auditor a, aSaved;
+		Auditor admin, aSaved;
 		Collection<Auditor> aBefore, aAfter;
 		
-		a = auditorService.create();
-		Assert.notNull(a);
+		admin = auditorService.create();
+		Assert.notNull(admin);
 		
-		//Probamos save
-		a.setName("name");
-		a.setSurname("surname");
-		a.setEmail("email@email.es");
+		//Comprobamos save
+		UserAccount ua = userAccountService.create();
+		Collection<Authority> auth = new ArrayList<Authority>();
+		Authority au = new Authority();
+		au.setAuthority(Authority.AUDITOR);
+		auth.add(au);
+		ua.setAuthorities(auth);
+		ua.setEnabled(true);
+		ua.setUsername("prueba");
+		ua.setPassword("prueba");
+		admin.setUserAccount(ua);
+		admin.setName("name");
+		admin.setSurname("surname");
+		admin.setEmail("email@email.es");
+		admin.setPhoneNumber("132");
 		
-		aSaved = auditorService.save(a);
+		aSaved = auditorService.save(admin);
 		Assert.notNull(aSaved);
 		
 		aBefore = auditorService.findAll();

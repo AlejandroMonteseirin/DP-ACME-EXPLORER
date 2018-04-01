@@ -28,6 +28,7 @@ public class ContactServiceTest extends AbstractTest{
 	
 	@Test
 	public void createSaveAnDelete(){
+		super.authenticate("explorer1");
 		Contact c;
 		Contact cSaved;
 		Collection<Contact> contactsBefore = new ArrayList<>();

@@ -87,10 +87,11 @@ public class RangerService {
 							.getPassword(), null));
 		}
 
+		if(ranger.getPhoneNumber() != null){
 		String tlf = configurationService.checkPhoneNumber(ranger
 				.getPhoneNumber());
 		ranger.setPhoneNumber(tlf);
-
+		}
 		if (ranger.getId() == 0) {
 			ranger.getUserAccount().setEnabled(true);
 		}

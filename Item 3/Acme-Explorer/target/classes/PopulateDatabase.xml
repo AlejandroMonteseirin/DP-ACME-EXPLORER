@@ -1589,8 +1589,9 @@
 		<property name="survivalClasses">
 			<list>
 				
-				<ref bean="survivalClass3" />
-				<ref bean="survivalClass2" />
+				<ref bean="survivalClass1" />
+				<ref bean="survivalClass4" />
+				
 			</list>
 		</property>
 		<property name="replies">
@@ -1634,7 +1635,8 @@
 		</property>
 		<property name="survivalClasses">
 			<list>
-				<ref bean="survivalClass1" />
+				<ref bean="survivalClass2" />
+				<ref bean="survivalClass3" />
 			
 					
 			</list>

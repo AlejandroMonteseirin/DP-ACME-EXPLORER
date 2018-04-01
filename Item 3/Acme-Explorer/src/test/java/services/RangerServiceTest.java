@@ -12,8 +12,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import security.Authority;
+import security.UserAccount;
+import security.UserAccountService;
 import utilities.AbstractTest;
-import domain.Folder;
 import domain.Ranger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,7 +27,7 @@ public class RangerServiceTest extends AbstractTest {
 	@Autowired
 	private RangerService rangerService;
 	@Autowired
-	private FolderService folderService;
+	private UserAccountService userAccountService;
 	
 	@Test
 	public void createSaveDelete(){
@@ -36,6 +38,17 @@ public class RangerServiceTest extends AbstractTest {
 		Assert.notNull(admin);
 		
 		//Comprobamos save
+		UserAccount ua = userAccountService.create();
+		Collection<Authority> auth = new ArrayList<Authority>();
+		Authority au = new Authority();
+		au.setAuthority(Authority.MANAGER);
+		auth.add(au);
+		ua.setAuthorities(auth);
+		ua.setEnabled(true);
+		ua.setUsername("prueba");
+		ua.setPassword("prueba");
+		admin.setUserAccount(ua);
+		
 		admin.setName("name");
 		admin.setSurname("surname");
 		admin.setEmail("email@email.es");

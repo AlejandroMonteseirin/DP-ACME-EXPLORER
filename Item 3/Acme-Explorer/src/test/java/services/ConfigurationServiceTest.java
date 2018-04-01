@@ -56,14 +56,5 @@ public class ConfigurationServiceTest extends AbstractTest{
 		Assert.isTrue(configsAfter.contains(configSaved));
 		
 	}
-	
-	@Test
-	public void deleteTest(){
-		Configuration config = configService.findOne(1422);
-		Assert.notNull(config);
-		configService.delete(config);
-		Collection<Configuration> configsAfter = configService.findAll();
-		Assert.isTrue(!configsAfter.contains(config));
-	}
 
 }

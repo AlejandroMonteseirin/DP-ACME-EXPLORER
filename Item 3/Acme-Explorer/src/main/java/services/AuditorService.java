@@ -83,10 +83,11 @@ public class AuditorService {
 							.getPassword(), null));
 		}
 
+		if(auditor.getPhoneNumber()!=null){
 		String tlf = configurationService.checkPhoneNumber(auditor
 				.getPhoneNumber());
 		auditor.setPhoneNumber(tlf);
-
+		}
 		if (auditor.getId() == 0) {
 			auditor.getUserAccount().setEnabled(true);
 		}

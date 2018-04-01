@@ -39,6 +39,8 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		edRecord.setEmail("email@email.es");
 		edRecord.setFullName("name");
 		edRecord.setPhoneNumber("131232");
+		edRecord.setPhotoUrl("http://www.foto.jpg");
+		edRecord.setLinkedInProfileUrl("http://www.foto.jpg");
 		edSaved = personalRecordService.save(edRecord);
 		
 		eBefore = personalRecordService.findAll();

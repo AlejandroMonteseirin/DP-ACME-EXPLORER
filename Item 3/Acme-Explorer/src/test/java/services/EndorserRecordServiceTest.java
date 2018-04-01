@@ -1,7 +1,6 @@
 
 package services;
 
-import java.sql.Date;
 import java.util.Collection;
 
 import javax.transaction.Transactional;

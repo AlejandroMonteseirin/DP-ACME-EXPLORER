@@ -74,8 +74,9 @@ public class EducationRecordService {
 
 	public EducationRecord save(final EducationRecord educationRecord) {
 		Assert.notNull(educationRecord);
+		if(educationRecord.getEndDate() != null){
 		Assert.isTrue(educationRecord.getStartDate().before(educationRecord.getEndDate()),"message.error.startDateEndDate");
-
+		}
 		Ranger r;
 		Collection<EducationRecord> c;
 		EducationRecord result;

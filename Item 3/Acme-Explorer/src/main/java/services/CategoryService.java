@@ -62,20 +62,26 @@ public class CategoryService {
 //		if (category.getId() != 0) {
 			Collection<Category> categories;
 
+			if(category.getParentCategory() != null){
+			//Comprobamos que una categoría no es padre/hija de sí misma
+			Assert.isTrue(!category.getParentCategory().equals(category),"message.error.parentCategory");
+				
 			categories = categoryRepository
 					.getCategoriesbByParentCategory(category
 							.getParentCategory().getId());
-
+			}else{
+				
+				categories = categoryRepository.getParentCategories();
+			}
 			for (Category c : categories) {
 				if (c.getId() != category.getId()) {
 					Assert.isTrue(!c.getName().equals(category.getName()),
 							"message.error.childCategories");
 				}
 			}
+		
 //		}
 
-		//Comprobamos que una categoría no es padre/hija de sí misma
-		Assert.isTrue(!category.getParentCategory().equals(category),"message.error.parentCategory");
 		
 		// Actualizamos el padre-----------------------------------
 //		Collection<Category> aux = category.getParentCategory().getChildCategories();

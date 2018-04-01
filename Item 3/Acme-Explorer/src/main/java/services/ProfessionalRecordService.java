@@ -74,7 +74,9 @@ public class ProfessionalRecordService {
 
 	public ProfessionalRecord save(final ProfessionalRecord pr) {
 		Assert.notNull(pr);
+		if(pr.getEndDate() != null){
 		Assert.isTrue(pr.getStartDate().before(pr.getEndDate()),"message.error.startDateEndDate");
+		}
 		Ranger r;
 		Collection<ProfessionalRecord> c;
 		ProfessionalRecord result;

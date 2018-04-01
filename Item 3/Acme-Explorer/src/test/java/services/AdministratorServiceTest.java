@@ -11,10 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import security.UserAccountService;
 import utilities.AbstractTest;
 import domain.Administrator;
-import domain.Folder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -26,8 +24,6 @@ public class AdministratorServiceTest extends AbstractTest{
 	//Service under test
 	@Autowired
 	private AdministratorService administratorService;
-	@Autowired
-	private UserAccountService userAccountService;
 	
 	@Test
 	public void createSaveDelete(){

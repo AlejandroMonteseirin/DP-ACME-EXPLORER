@@ -85,10 +85,13 @@ public class ExplorerService {
 					encoder.encodePassword(explorer.getUserAccount()
 							.getPassword(), null));
 		}
-
-		String tlf = configurationService.checkPhoneNumber(explorer
-				.getPhoneNumber());
-		explorer.setPhoneNumber(tlf);
+		
+		if (explorer.getPhoneNumber() != null) {
+			String tlf = configurationService.checkPhoneNumber(explorer
+					.getPhoneNumber());
+			explorer.setPhoneNumber(tlf);
+		}
+		
 		if (explorer.getId() == 0) {
 			explorer.getUserAccount().setEnabled(true);
 		}

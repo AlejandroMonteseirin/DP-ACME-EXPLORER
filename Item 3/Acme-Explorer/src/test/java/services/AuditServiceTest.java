@@ -2,7 +2,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -16,6 +15,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Audit;
+import domain.Auditor;
 import domain.Trip;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,42 +29,46 @@ public class AuditServiceTest extends AbstractTest {
 	private AuditService auditService;
 	@Autowired
 	private TripService tripService;
+	@Autowired
+	private ActorService actorService;
 
 	// Tests ----------------------------------------------
 	@Test
 	public void testCreateSaveAndDelete() {
-//		authenticate("auditor1");
-//
-//		List<Trip> tripBD;
-//		Trip trip;
-//		Audit audit, aSaved;
-//		Collection<Audit> aBefore, aAfter;
-//		
-//		tripBD = new ArrayList<>(tripService.findAll());
-//		trip = tripBD.get(0);
-//		audit = auditService.create(trip);
-//		
-//		Assert.notNull(audit);
-//
-//		//Probamos save
-//		audit.setDescription("Audicion de paco el cantador intento numero 23");
-//		audit.setTitle("paco el cantador grabacion");
-//		audit.getAttachmentURLs().add("paquito.es");
-//		audit.getAttachmentURLs().add("youtube.es");
-//
-//		aSaved = auditService.save(audit);
-//		Assert.notNull(aSaved);
-//		System.out.println(aSaved.getAttachmentURLs().toArray()[0]);
-//		
-//		aBefore = auditService.findAll();
-//		Assert.isTrue(aBefore.contains(aSaved));
-//		
-//		//Comprobamos delete
-//		auditService.delete(aSaved);
-//		
-//		aAfter = auditService.findAll();
-//		
-//		Assert.isTrue(!aAfter.contains(aSaved));
+		authenticate("auditor1");
+
+		List<Trip> tripBD;
+		Trip trip;
+		Audit audit, aSaved;
+		Collection<Audit> aBefore, aAfter;
+		
+		tripBD = new ArrayList<>(tripService.findAll());
+		trip = tripBD.get(0);
+		audit = auditService.create();
+		
+		Assert.notNull(audit);
+
+		//Probamos save
+		audit.setDescription("Audicion de paco el cantador intento numero 23");
+		audit.setTitle("paco el cantador grabacion");
+		audit.getAttachmentURLs().add("paquito.es");
+		audit.getAttachmentURLs().add("youtube.es");
+		audit.setTrip(trip);
+		audit.setAuditor((Auditor) actorService.findByPrincipal());
+		audit.setSavedMode("DRAFT MODE");
+
+		aSaved = auditService.save(audit);
+		Assert.notNull(aSaved);
+		
+		aBefore = auditService.findAll();
+		Assert.isTrue(aBefore.contains(aSaved));
+		
+		//Comprobamos delete
+		auditService.delete(aSaved);
+		
+		aAfter = auditService.findAll();
+		
+		Assert.isTrue(!aAfter.contains(aSaved));
 	}
 
 }
