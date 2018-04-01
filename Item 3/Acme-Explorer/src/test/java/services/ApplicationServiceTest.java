@@ -1,5 +1,6 @@
 package services;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class ApplicationServiceTest extends AbstractTest{
 		
 		appSaved = applicationService.save(app);
 		
+		appSaved.getTrip().setStartDate(Date.valueOf("2020-02-02"));
 		applicationService.cancelApplication(appSaved);
 		Assert.isTrue(appSaved.getStatus().equals("CANCELLED"));
 		super.authenticate(null);
